@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b0a">
+  <meta name="description" content="Organizador de tarefas moderno para planejar seu dia e acompanhar seu progresso.">
+  <title>TaskFlow | Organizador de Tarefas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="TaskFlow início">
+      <span class="brand-icon">✓</span>
+      <span>task<span>flow</span><small>ORGANIZE. REALIZE.</small></span>
+    </a>
+    <div class="topbar-right">
+      <span class="live-dot"></span>
+      <span>Seu espaço de produtividade</span>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="welcome">
+      <div>
+        <p class="eyebrow"><span class="eyebrow-line"></span> CENTRAL DE PRODUTIVIDADE</p>
+        <h1>Menos caos.<br><span>Mais feito.</span></h1>
+        <p class="welcome-copy">Organize suas prioridades, acompanhe seu progresso e tire as ideias do papel — uma tarefa por vez.</p>
+      </div>
+      <div class="date-widget">
+        <span class="date-label">HOJE É</span>
+        <strong id="todayWeekday">--</strong>
+        <span id="todayDate">--</span>
+      </div>
+    </section>
+
+    <section class="stats-grid" aria-label="Resumo das tarefas">
+      <article class="stat-card stat-total">
+        <div class="stat-top"><span>TOTAL DE TAREFAS</span><span class="stat-symbol">▤</span></div>
+        <strong id="totalCount">0</strong>
+        <p>Tarefas no seu espaço</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>PENDENTES</span><span class="stat-symbol">◷</span></div>
+        <strong id="pendingCount">0</strong>
+        <p>Ainda precisam de atenção</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>CONCLUÍDAS</span><span class="stat-symbol">✓</span></div>
+        <strong id="completedCount">0</strong>
+        <p>Você está avançando</p>
+      </article>
+      <article class="stat-card progress-stat">
+        <div class="stat-top"><span>PROGRESSO</span><span class="stat-symbol">↗</span></div>
+        <strong><span id="progressPercent">0</span><small>%</small></strong>
+        <div class="progress-track"><span id="progressBar"></span></div>
+        <p>Continue nesse ritmo</p>
+      </article>
+    </section>
+
+    <section class="workspace">
+      <div class="tasks-panel panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">SEU PLANEJAMENTO</p>
+            <h2>Minhas tarefas <span class="count-pill" id="visibleCount">0</span></h2>
+          </div>
+          <button class="button button-ghost" id="clearCompleted" type="button">Limpar concluídas <span>↗</span></button>
+        </div>
+
+        <form class="task-form" id="taskForm">
+          <label class="sr-only" for="taskTitle">Nome da tarefa</label>
+          <input id="taskTitle" type="text" maxlength="120" placeholder="O que você precisa fazer?" autocomplete="off" required>
+          <label class="sr-only" for="taskDate">Prazo da tarefa</label>
+          <input id="taskDate" type="date" aria-label="Prazo da tarefa">
+          <label class="sr-only" for="taskPriority">Prioridade</label>
+          <select id="taskPriority" aria-label="Prioridade">
+            <option value="normal">Normal</option>
+            <option value="alta">Alta</option>
+            <option value="baixa">Baixa</option>
+          </select>
+          <button class="button button-primary" type="submit"><span class="plus">+</span> Adicionar</button>
+        </form>
+
+        <div class="toolbar">
+          <div class="filter-tabs" role="group" aria-label="Filtrar tarefas">
+            <button class="filter-tab active" data-filter="todas" type="button">Todas</button>
+            <button class="filter-tab" data-filter="pendentes" type="button">Pendentes</button>
+            <button class="filter-tab" data-filter="concluidas" type="button">Concluídas</button>
+          </div>
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="searchTask" type="search" placeholder="Buscar tarefa..." aria-label="Buscar tarefa">
+          </label>
+        </div>
+
+        <div id="taskList" class="task-list" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">✳</div>
+          <h3>Nenhuma tarefa por aqui</h3>
+          <p>Adicione sua primeira tarefa e comece a organizar seu dia.</p>
+        </div>
+        <div class="panel-footer">
+          <span><span class="footer-dot"></span> Suas tarefas são salvas neste navegador</span>
+          <span id="taskSummary">Tudo pronto para começar</span>
+        </div>
+      </div>
+
+      <aside class="side-column">
+        <section class="focus-card">
+          <div class="focus-orb">✦</div>
+          <p class="eyebrow">LEMBRETE DO DIA</p>
+          <h2>Progresso é melhor que perfeição.</h2>
+          <p>Escolha uma prioridade, dê o primeiro passo e mantenha o ritmo. Pequenas ações também contam.</p>
+          <div class="focus-decoration">FOCO<span> / </span>CONSTÂNCIA</div>
+        </section>
+
+        <section class="panel tips-panel">
+          <p class="eyebrow">DICA RÁPIDA</p>
+          <h3>Comece pelo importante.</h3>
+          <p>Marque suas tarefas mais urgentes com prioridade alta para bater o olho e saber por onde começar.</p>
+          <div class="tip-tags"><span>01</span><span>Priorize</span><span>Execute</span></div>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <span>Feito com <b>♥</b> e código.</span>
+      <span>TASKFLOW <i>©</i> <span id="year"></span> · HTML, CSS & JavaScript</span>
+    </footer>
+  </main>
+</body>
+</html>
